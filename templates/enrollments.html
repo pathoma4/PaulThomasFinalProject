@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+{% block page_content %}
+<body>
+
+    <div style="margin-top: 7%; margin-bottom: 5%" class="container">
+        <div style="display: none" id="alert-danger" class="alert alert-danger" role="alert">
+          This student is already enrolled in 3 courses.
+        </div>
+        <div style="display: none" id="alert-success" class="alert alert-success" role="alert">
+          User has been enrolled successfully.
+        </div>
+        <div style="float: right" class="col col-lg-2">
+            <div class="input-group mb-3">
+              <select class="custom-select" id="inputGroupSelect01" onchange="studentSelected(this.value);">
+                <option selected>Select Student</option>
+                {% for student in students %}
+                    <option value="{{ student.student_id }}">{{student.first_name}} {{ student.last_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+        </div>
+        <div id="tablediv">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                    <th scope="col">Course Id</th>
+                    <th scope="col">Course Title</th>
+                    <th scope="col">Course Name</th>
+                    <th scope="col">Section Code</th>
+                    <th scope="col">Course Department</th>
+                    <th scope="col">Instructor Name</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for course in courses %}
+                <tr>
+                    <td>{{ course.course_id }}</td>
+                    <td>{{ course.course_title }}</td>
+                    <td>{{ course.course_name }}</td>
+                    <td>{{ course.course_section_code }}</td>
+                    <td>{{ course.course_department }}</td>
+                    <td>{{ course.course_instructor_name }}</td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function studentSelected(value) {
+            var student_id = value;
+            localStorage.setItem('student_id', student_id)
+            $.ajax({
+                type: 'GET',
+                url: '{% url "get-enrollments" %}',
+                data: {
+                    'student_id': student_id
+                },
+                success: function (data) {
+                  $('#tablediv').html(data)
+                }
+            });
+        }
+    </script>
+    <script>
+        function enroll(value) {
+            var course_id = value;
+            var student_id = localStorage.getItem('student_id');
+            $.ajax({
+                type: 'GET',
+                url: '{% url "enroll" %}',
+                data: {
+                    'student_id': student_id,
+                    'course_id': course_id
+                },
+                success: function (data) {
+                    if (data=='error'){
+                        $('#alert-danger').show();
+                        setTimeout(function () {
+                            $('#alert-danger').hide();
+                        },3000);
+                    }else{
+                        $('#alert-success').show();
+                        setTimeout(function () {
+                            $('#alert-success').hide();
+                        },3000);
+                    }
+
+                }
+            });
+            setTimeout(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '{% url "get-enrollments" %}',
+                    data: {
+                        'student_id': student_id
+                    },
+                    success: function (data) {
+                      $('#tablediv').html(data)
+                    }
+                });
+            },1000)
+
+        }
+    </script>
+</body>
+{% endblock %}
+</html>

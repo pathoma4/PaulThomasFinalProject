@@ -1,0 +1,26 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Course Id</th>
+        <th scope="col">Course Title</th>
+        <th scope="col">Course Name</th>
+        <th scope="col">Section Code</th>
+        <th scope="col">Course Department</th>
+        <th scope="col">Instructor Name</th>
+        <th scope="col">Enrollment</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for course in courses %}
+        <tr>
+            <td>{{ course.course_id }}</td>
+            <td>{{ course.course_title }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.course_section_code }}</td>
+            <td>{{ course.course_department }}</td>
+            <td>{{ course.course_instructor_name }}</td>
+            <td>{% if course in my_courses %}<span>Enrolled</span>{% else %}<a href="#" onclick='enroll("{{ course.course_id }}")'>Enroll Now</a>{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

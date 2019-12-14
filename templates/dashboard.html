@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+{% block page_content %}
+<body>
+    <div style="margin-top: 5%" class="container">
+      <div class="row">
+    <div style="background-color: #025964; height: 150px; border-radius: 20px; margin: 0px 10px 10px 0px; text-align: center;" class="col">
+        <p style="font-size: 26px; position: inherit; top: 35%; color: white;">Total Students: {{dashboard_data.students}}</p>
+    </div>
+    <div style="background-color: #640d02; height: 150px; border-radius: 20px; text-align: center;" class="col">
+        <p style="font-size: 26px; position: inherit; top: 35%; color: white;">Total Juniors: {{dashboard_data.juniors}}</p>
+    </div>
+    <div style="background-color: #286402; height: 150px; left: 1%; border-radius: 20px; text-align: center;" class="col">
+        <p style="font-size: 26px; position: inherit; top: 35%; color: white;">Average GPA: {{dashboard_data.average_gpa | floatformat:2}}</p>
+    </div>
+    <div class="w-100"></div>
+    <div style="background-color:#640d02 ; height: 150px; border-radius: 20px; margin: 0px 10px 10px 0px; text-align: center;" class="col">
+        <p style="font-size: 26px; position: inherit; top: 35%; color: white;">Total Seniors: {{dashboard_data.seniors}}</p>
+    </div>
+
+          <div class="w-100"></div>
+    <div style="background-color: #025964; height: 150px; border-radius: 20px; margin: 0px 10px 10px 0px; text-align: center;" class="col">
+        <p style="font-size: 26px; position: inherit; top: 35%; color: white;">Total Sophomores: {{dashboard_data.sophomores}}</p>
+    </div>
+    <div style="background-color: #286402; height: 150px; border-radius: 20px; text-align: center;" class="col">
+        <p style="font-size: 26px; position: inherit; top: 35%; color: white;">Number of Courses: {{dashboard_data.total_courses}}</p>
+    </div>
+  </div>
+    </div>
+</body>
+{% endblock %}
+</html>

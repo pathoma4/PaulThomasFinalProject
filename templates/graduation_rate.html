@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" crossorigin="anonymous">
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+{% block page_content %}
+<body>
+    <div style="margin-top: 7%; margin-bottom: 5%" class="container">
+        <canvas id="myChart" ></canvas>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{ years|safe }},
+        datasets: [{
+            label: 'Four Year Grade Rate',
+            data: {{ four_year_gr|safe }},
+            fill: false,
+            borderColor: 'rgb(218, 135, 0 )',
+            borderWidth: 2
+        },
+        {
+            label: 'Five Year Grade Rate',
+            data: {{ five_year_gr|safe }},
+            fill: false,
+            borderColor: 'rgb(75, 119, 27 )',
+            borderWidth: 2
+        },
+        {
+            label: 'Six Year Grade Rate',
+            data: {{ six_year_gr|safe }},
+            fill: false,
+            borderColor: 'rgb(144, 12, 63)',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+    </script>
+</body>
+{% endblock %}
+</html>
