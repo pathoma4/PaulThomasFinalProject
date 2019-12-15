@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class FPConfig(AppConfig):
+class fpConfig(AppConfig):
     name = 'fp'
